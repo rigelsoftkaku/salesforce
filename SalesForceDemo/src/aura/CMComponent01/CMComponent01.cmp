@@ -1,0 +1,55 @@
+<aura:component
+	implements="force:appHostable,flexipage:availableForAllPageTypes"
+	access="global">
+	<!--Aセクションを開く -->
+	<lightning:accordion aura:id="accordion" activeSectionName="A">
+		<lightning:accordionSection name="A" label="劉　祥海　社長">
+			<aura:set attribute="actions">
+				<lightning:buttonMenu aura:id="menu" onselect="{! c.handleSelect }"
+					alternativeText="Show menu" iconSize="x-small"
+					menuAlignment="right">
+					<lightning:menuItem value="Edit" label="編集"></lightning:menuItem>
+					<lightning:menuItem value="Delete" label="削除"></lightning:menuItem>
+				</lightning:buttonMenu>
+			</aura:set>
+			<aura:set attribute="body">
+				<p>Tel：070-6511-0999</p>
+				<p>Email：x-liu@rigelsoft.co.jp</p>
+				<p>HomePage：http://www.rigelsoft.co.jp</p>
+				<p>Address:東京都江戸川区西葛西６−２３−２０ ３０１号</p>
+			</aura:set>
+		</lightning:accordionSection>
+
+		<lightning:accordionSection name="B" label="郭　華維　技術者">
+			<aura:set attribute="actions">
+				<lightning:buttonMenu aura:id="menu" alternativeText="Show menu"
+					iconSize="x-small" menuAlignment="right">
+					<lightning:menuItem value="Edit" label="編集"></lightning:menuItem>
+					<lightning:menuItem value="Delete" label="削除"></lightning:menuItem>
+				</lightning:buttonMenu>
+			</aura:set>
+			<aura:set attribute="body">
+				<p>Tel：080-4605-0428</p>
+				<p>Email：kai.kaku@rigelsoft.co.jp</p>
+				<p>HomePage：http://www.rigelsoft.co.jp</p>
+				<p>Address:東京都江戸川区西葛西６−２３−２０ ３０１号</p>
+			</aura:set>
+		</lightning:accordionSection>
+
+		<lightning:accordionSection name="C" label="リゲル　太郎　技術者">
+			<aura:set attribute="actions">
+				<lightning:buttonMenu aura:id="menu" alternativeText="Show menu"
+					iconSize="x-small" menuAlignment="right">
+					<lightning:menuItem value="Edit" label="編集"></lightning:menuItem>
+					<lightning:menuItem value="Delete" label="削除"></lightning:menuItem>
+				</lightning:buttonMenu>
+			</aura:set>
+			<aura:set attribute="body">
+				<p>Tel：080-4605-0428</p>
+				<p>Email：kai.kaku@rigelsoft.co.jp</p>
+				<p>HomePage：http://www.rigelsoft.co.jp</p>
+				<p>Address:東京都江戸川区西葛西６−２３−２０ ３０１号</p>
+			</aura:set>
+		</lightning:accordionSection>
+	</lightning:accordion>
+</aura:component>

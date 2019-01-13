@@ -1,0 +1,75 @@
+<apex:page controller="CaseInfoController" sidebar="false"
+	Id="CaseInfoDetail">
+	<apex:form id="form1">
+		<apex:pageBlock title="案件詳細情報">
+			<apex:pageMessages id="messagearea" showDetail="false" />
+			<apex:pageblockSection id="caseInfoBaseSection" title="案件基本情報"
+				columns="1">
+				<apex:outputpanel id="caseInfoBasePanel">
+                    <div class="pbBody">
+                        <div class="pbSubsection">
+                            <table id="caseInfoBaseTable" class="detailList">
+                                <tr>
+                                    <td class="labelCol"><apex:outputLabel value="案件番号"
+                                            for="caseIdField" /></td>
+                                    <td class="dataCol col02"><apex:outputText id="caseIdField"
+                                            value="{!caseBaseInfo.caseId__c}"></apex:outputText></td>
+        
+                                    <td class="labelCol"><apex:outputLabel value="案件名称"
+                                            for="caseNameField" styleClass="labelCol" /></td>
+                                    <td class="dataCol col02"><apex:outputText id="caseNameField"
+                                            value="{!caseBaseInfo.caseName__c}"></apex:outputText></td>
+                                </tr>
+                                <tr>
+                                    <td class="labelCol"><apex:outputLabel value="作業開始"
+                                            for="workStartDate" /></td>
+                                    <td class="dataCol col02"><apex:outputText id="workStartDate"
+                                            value="{!caseBaseInfo.workStartDate__c}"></apex:outputText></td>
+        
+                                    <td class="labelCol"><apex:outputLabel value="作業終了"
+                                            for="workEndDate" styleClass="labelCol" /></td>
+                                    <td class="dataCol col02"><apex:outputText id="workEndDate"
+                                            value="{!caseBaseInfo.workEndDate__c}"></apex:outputText></td>
+                                </tr>
+                                <tr>
+                                    <td class="labelCol"><apex:outputLabel value="作業場所"
+                                            for="workSpace" /></td>
+                                    <td class="dataCol col02"><apex:outputText id="workSpace"
+                                            value="{!caseBaseInfo.workSpace__c}"></apex:outputText></td>
+        
+                                    <td class="labelCol"><apex:outputLabel value="作業内容"
+                                            for="workContent" styleClass="labelCol" /></td>
+                                    <td class="dataCol col02"><apex:outputText id="workContent"
+                                            value="{!caseBaseInfo.workContent__c}"></apex:outputText></td>
+                                </tr>
+                                
+                                <tr>
+                                    <td class="labelCol"><apex:outputLabel value="人　　　数"
+                                            for="workerCount" /></td>
+                                    <td class="dataCol col02"><apex:outputText id="workerCount"
+                                            value="{!caseBaseInfo.workerCount__c}人"></apex:outputText></td>
+        
+                                    <td class="labelCol"><apex:outputLabel value="単　　　価"
+                                            for="price" styleClass="labelCol" /></td>
+                                    <td class="dataCol col02">
+                                        <!-- カンマ区切り数値 -->
+										<apex:outputText id="price" value="{!caseBaseInfo.price__c}円">
+										</apex:outputText>
+                                    </td>
+                                </tr>
+                            </table>
+                    	</div>
+                    </div>                    
+				</apex:outputpanel>
+			</apex:pageblockSection>
+			<apex:pageBlockButtons id="buttonSection" location="bottom">
+				<apex:commandButton value="受注申請" action="{!receiveRealOrder}"
+					style="font-size:12pt;width:100px;height:30px;"
+					reRender="searchresult,messagearea" />
+				<apex:commandButton value="キャンセル" action="{!init}"
+					style="font-size:12pt;width:100px;height:30px;"
+					reRender="searchcondition,searchresult,messagearea" />
+			</apex:pageBlockButtons>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

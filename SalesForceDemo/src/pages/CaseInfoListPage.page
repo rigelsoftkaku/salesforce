@@ -1,0 +1,121 @@
+<apex:page controller="CaseInfoController" action="{!init}" sidebar="false" Id="CaseInfoList">
+  	<style type="text/css">
+        #conditionTable { width: 50%; border: 0; margin-left: 5%; }
+        #conditionTable .label { text-align: right; }
+        #conditionTable .dateFormat { display: none; }
+	</style>
+	<script type="text/javascript">
+    	// ページを開いたときに初期フォーカスをしない
+    	beenFocused = true;
+	</script>
+<apex:form id="form1">
+    <apex:pageBlock title="案件情報">
+        <apex:pageMessages id="messagearea" showDetail="false"/>
+        <apex:pageblockSection id="conditionSection" title="検索条件" columns="1">
+            <apex:outputpanel id="searchCondition">
+                <table id="conditionTable">
+                    <tr>
+                        <td class="label"><apex:outputLabel value="案件番号" for="caseIdField" styleClass="labelCol" /></td>
+                        <td><apex:inputField id="caseIdField" value="{!caseInfoService.searchObj.caseId__c}" /></td>
+                    </tr>
+                    <tr>
+                        <td class="label"><apex:outputLabel value="案件名称" for="caseNameField" styleClass="labelCol" /></td>
+                        <td><apex:inputField id="caseNameField" value="{!caseInfoService.searchObj.caseName__c}" /></td>
+                    </tr>
+                </table>
+            </apex:outputpanel>
+        </apex:pageblockSection>
+        <apex:pageBlockButtons id="buttonSection" location="bottom" >
+            <apex:commandButton value="検索" action="{!searchCaseInfo}" style="font-size:12pt;width:100px;height:30px;" reRender="searchresult,messagearea"/>
+            <apex:commandButton value="クリア" action="{!clear}" style="font-size:12pt;width:100px;height:30px;" reRender="searchcondition,searchresult,messagearea"/>
+        </apex:pageBlockButtons>
+    </apex:pageBlock>
+</apex:form>
+<apex:outputpanel id="searchresult">
+    <apex:pageBlock title="検索結果：" rendered="{!(results.size == 0)}">
+         検索条件に該当するデータがありません
+    </apex:pageBlock>
+
+    <apex:form id="resultForm">
+        <apex:pageBlock id="resultBlock" title="案件一覧" rendered="{!(results.size > 0)}">
+            <apex:outputtext style="width:110px" value="件数 : {!results.size}件"/>
+            <apex:pageblockTable id="resultTable" value="{!results}" var="o" frame="box">
+                <apex:column style="width:80px">
+                    <apex:facet name="header">
+                        <apex:commandLink action="{!sort}" value="案件番号{!IF(sortKey == 'caseId__c', sortOrder, '　')}">
+                            <apex:param value="caseId__c" name="String" assignTo="{!sortingField}" />
+                        </apex:commandLink>
+                    </apex:facet>
+                    <apex:outputlink value="/{!o.caseId__c}"><apex:outputField style="width:80px" value="{!o.caseId__c}"/></apex:outputlink>
+                </apex:column>
+                <apex:column style="width:160px">
+                    <apex:facet name="header">
+                        <apex:commandLink action="{!sort}" value="案件名称{!IF(sortKey == 'caseName__c', sortOrder, '　')}">
+                            <apex:param value="caseName__c" name="String" assignTo="{!sortingField}" />
+                        </apex:commandLink>
+                    </apex:facet> 
+                    <apex:outputField style="width:150px" value="{!o.caseName__c}"/>
+                </apex:column>
+                <apex:column style="width:80px">
+                    <apex:facet name="header">
+                        <apex:commandLink action="{!sort}" value="作業場所{!IF(sortKey == 'workSpace__c', sortOrder, '　')}">
+                            <apex:param value="workSpace__c" name="String" assignTo="{!sortingField}" />
+                        </apex:commandLink>
+                    </apex:facet>
+                    <apex:outputField style="width:150px" value="{!o.workSpace__c}"/>
+                </apex:column>
+                <apex:column style="width:80px">
+                    <apex:facet name="header">
+                        <apex:commandLink action="{!sort}" value="作業開始日{!IF(sortKey == 'workStartDate__c', sortOrder, '　')}">
+                            <apex:param value="workStartDate__c" name="String" assignTo="{!sortingField}" />
+                        </apex:commandLink>
+                    </apex:facet> 
+                    <apex:outputField style="width:80px" value="{!o.workStartDate__c}"/>
+                </apex:column>
+                <apex:column style="width:80px">
+                    <apex:facet name="header">
+                        <apex:commandLink action="{!sort}" value="作業終了日{!IF(sortKey == 'workEndDate__c', sortOrder, '　')}">
+                            <apex:param value="workEndDate__c" name="String" assignTo="{!sortingField}" />
+                        </apex:commandLink>
+                    </apex:facet> 
+                    <apex:outputField style="width:80px" value="{!o.workEndDate__c}"/>
+                </apex:column>
+                <apex:column style="width:120px">
+                    <apex:facet name="header">
+                        <apex:commandLink action="{!sort}" value="単価{!IF(sortKey == 'price__c', sortOrder, '　')}">
+                            <apex:param value="price__c" name="String" assignTo="{!sortingField}" />
+                        </apex:commandLink>
+                    </apex:facet> 
+                    <apex:outputField style="width:150px" value="{!o.price__c}"/>
+                </apex:column>
+                <apex:column style="width:120px">
+                    <apex:facet name="header">
+                        <apex:commandLink action="{!sort}" value="人数{!IF(sortKey == 'workerCount__c', sortOrder, '　')}">
+                            <apex:param value="workerCount__c" name="String" assignTo="{!sortingField}" />
+                        </apex:commandLink>
+                    </apex:facet> 
+                    <apex:outputField style="width:150px" value="{!o.workerCount__c}"/>
+                </apex:column>
+                <apex:column style="width:80px">
+                    <apex:facet name="header">
+                        <apex:commandLink action="{!sort}" value="最終更新日時{!IF(sortKey == 'LastModifiedDate', sortOrder, '　')}">
+                            <apex:param value="LastModifiedDate" name="String" assignTo="{!sortingField}" />
+                        </apex:commandLink>
+                    </apex:facet> 
+                    <apex:outputField style="width:80px" value="{!o.LastModifiedDate}"/>
+                </apex:column>
+                
+                <apex:column style="width:80px">
+                    <apex:facet name="header">
+                        <apex:outputText style="width:80px" value="操作"></apex:outputText>
+                    </apex:facet> 
+                    <apex:commandLink action="{!receiveOrder}" value="受注申請">
+                    	<apex:param value="{!o.caseId__c}" name="selectedCaseId" assignTo="{!selectedCaseId}"/>
+                    </apex:commandLink>
+                </apex:column>
+                
+            </apex:pageblockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:outputpanel>
+</apex:page>
